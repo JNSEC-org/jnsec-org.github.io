@@ -5,7 +5,7 @@
         <% for (const i in type.list){ %>
             <% let item = type.list[i] %>
             <div class="group-item">
-                <img class="group-item-icon-img" src="<%= item.img %>" alt="product-icon" title="product-icon">
+                <img class="group-item-icon-img" src="<%= url_for(item.img) %>" alt="product-icon" title="product-icon">
                 <div class="group-info-group">
                     <div class="group-info">
                         <a class="title"><%= i %></a>
