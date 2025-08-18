@@ -1,0 +1,46 @@
+<%- partial('partial/nav') %>
+<%- partial('partial/breadcrumb') %>
+
+<div class="category-container">
+    <header class="category-header">
+        <h1 class="category-title">分类</h1>
+        <div class="category-count">
+            共 <%= site.categories.length %> 个分类
+        </div>
+    </header>
+
+    <div class="categories-list">
+        <% site.categories.each(function(category) { %>
+            <div class="category-item">
+                <h2 class="category-name">
+                    <a href="<%- url_for(category.path) %>"><%= category.name %></a>
+                    <span class="category-post-count">(<%= category.posts.length %>)</span>
+                </h2>
+                <div class="category-posts">
+                    <% category.posts.sort('date', -1).limit(5).each(function(post) { %>
+                        <article class="category-post">
+                            <div class="post-date">
+                                <%= date(post.date, 'YYYY-MM-DD') %>
+                            </div>
+                            <div class="post-info">
+                                <div class="post-category">
+                                    <%= category.name %>
+                                </div>
+                                <h3 class="post-title">
+                                    <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                                </h3>
+                            </div>
+                        </article>
+                    <% }); %>
+                    <% if (category.posts.length > 5) { %>
+                        <div class="more-posts">
+                            <a href="<%- url_for(category.path) %>">查看更多...</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- partial('partial/footer') %>

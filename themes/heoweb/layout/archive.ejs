@@ -1,0 +1,54 @@
+<%- partial('partial/nav') %>
+<%- partial('partial/breadcrumb') %>
+
+<div class="archive-container">
+    <header class="archive-header">
+        <h1 class="archive-title">
+            <% if (is_month()) { %>
+                <%= page.month %>/<%= page.year %> 归档
+            <% } else if (is_year()) { %>
+                <%= page.year %> 年归档
+            <% } else if (is_category()) { %>
+                分类：<%= page.category %>
+            <% } else if (is_tag()) { %>
+                标签：<%= page.tag %>
+            <% } else { %>
+                文章归档
+            <% } %>
+        </h1>
+        <div class="archive-count">
+            共 <%= page.posts.length %> 篇文章
+        </div>
+    </header>
+
+    <div class="archive-posts">
+        <% let current_year = 0; %>
+        <% page.posts.each(function(post) { %>
+            <% let post_year = date(post.date, 'YYYY'); %>
+            <% if (current_year !== post_year) { %>
+                <% current_year = post_year; %>
+                <div class="archive-year">
+                    <h2 class="year-title"><%= post_year %></h2>
+                </div>
+            <% } %>
+            
+            <article class="archive-post">
+                <div class="post-date">
+                    <%= date(post.date, 'MM-DD') %>
+                </div>
+                <div class="post-info">
+                    <% if (post.categories && post.categories.length) { %>
+                        <div class="post-category">
+                            <%= post.categories.first().name %>
+                        </div>
+                    <% } %>
+                    <h3 class="post-title">
+                        <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                    </h3>
+                </div>
+            </article>
+        <% }); %>
+    </div>
+</div>
+
+<%- partial('partial/footer') %>

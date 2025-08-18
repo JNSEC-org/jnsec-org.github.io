@@ -1,0 +1,50 @@
+<!-- 面包屑导航 -->
+<% if (!is_home()) { %>
+    <div class="breadcrumb-container">
+        <div class="breadcrumb">
+            <a href="<%= url_for('/') %>" class="breadcrumb-item">
+                <i class="fa fa-home"></i> 首页
+            </a>
+            <% if (is_archive()) { %>
+                <span class="breadcrumb-separator">/</span>
+                <% if (is_month()) { %>
+                    <a href="<%= url_for('archives') %>" class="breadcrumb-item">归档</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current"><%= page.year %>年</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current"><%= page.month %>月</span>
+                <% } else if (is_year()) { %>
+                    <a href="<%= url_for('archives') %>" class="breadcrumb-item">归档</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current"><%= page.year %>年</span>
+                <% } else { %>
+                    <span class="breadcrumb-current">归档</span>
+                <% } %>
+            <% } else if (is_category()) { %>
+                <span class="breadcrumb-separator">/</span>
+                <a href="<%= url_for('categories') %>" class="breadcrumb-item">分类</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current"><%= page.category %></span>
+            <% } else if (is_tag()) { %>
+                <span class="breadcrumb-separator">/</span>
+                <a href="<%= url_for('tags') %>" class="breadcrumb-item">标签</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current"><%= page.tag %></span>
+            <% } else if (is_post()) { %>
+                <span class="breadcrumb-separator">/</span>
+                <a href="<%= url_for('archives') %>" class="breadcrumb-item">归档</a>
+                <span class="breadcrumb-separator">/</span>
+                <% if (page.categories && page.categories.length) { %>
+                    <% page.categories.forEach(function(category, index){ %>
+                        <% if (index > 0) { %>
+                            <span class="breadcrumb-separator">/</span>
+                        <% } %>
+                        <a href="<%- url_for(category.path) %>" class="breadcrumb-item"><%= category.name %></a>
+                    <% }); %>
+                    <span class="breadcrumb-separator">/</span>
+                <% } %>
+                <span class="breadcrumb-current"><%= page.title %></span>
+            <% } %>
+        </div>
+    </div>
+<% } %>

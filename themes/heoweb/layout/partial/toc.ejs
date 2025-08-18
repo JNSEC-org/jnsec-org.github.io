@@ -1,0 +1,13 @@
+<% if (theme.blog && theme.blog.toc && toc(page.content).length > 0) { %>
+<div class="toc-container">
+    <div class="toc-wrapper">
+        <div class="toc-title">
+            <i class="toc-icon">📋</i>
+            目录
+        </div>
+        <div class="toc-content">
+            <%- toc(page.content, {list_number: false, max_depth: 4}) %>
+        </div>
+    </div>
+</div>
+<% } %>

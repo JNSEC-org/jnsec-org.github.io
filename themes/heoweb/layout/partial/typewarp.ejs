@@ -1,0 +1,14 @@
+<div class="product-banner" id="<%= name %>" style="background: <%- type.bg %>">
+    <div class="banner-info need-padding">
+<!--        <span class="tips">新品</span>-->
+        <span class="title"><%= type.title %></span>
+        <div class="banner-discription-group">
+            <span class="description"><%- type.desc %></span>
+        </div>
+        <% if (type.button) { %>
+            <div class="link-group">
+                <a class="primary-button" href="<%= url_for(type.button.url) %>"><%= type.button.text %></a>
+            </div>
+        <% } %>
+    </div>
+</div>

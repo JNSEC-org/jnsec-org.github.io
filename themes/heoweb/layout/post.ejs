@@ -1,0 +1,57 @@
+<%- partial('partial/nav') %>
+<%- partial('partial/breadcrumb') %>
+
+<div class="post-container">
+    <%- partial('partial/toc') %>
+    <article class="post">
+        <header class="post-header">
+            <div class="post-title-wrapper">
+                <h1 class="post-title"><%= page.title %></h1>
+            </div>
+            <div class="post-meta">
+                <time class="post-date" datetime="<%= date_xml(page.date) %>">
+                    📅 <%= date(page.date, 'YYYY-MM-DD') %>
+                </time>
+                <% if (page.categories && page.categories.length) { %>
+                    <span class="post-category">
+                        <% page.categories.forEach(function(category){ %>
+                            <a href="<%- url_for(category.path) %>" class="category-link">📁 <%= category.name %></a>
+                        <% }); %>
+                    </span>
+                <% } %>
+                <% if (page.tags && page.tags.length) { %>
+                    <div class="post-tags">
+                        <% page.tags.forEach(function(tag){ %>
+                            <a href="<%- url_for(tag.path) %>" class="tag-link">#<%= tag.name %></a>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </header>
+        
+        <div class="post-content">
+            <%- page.content %>
+        </div>
+        
+        <footer class="post-footer">
+            <% if (page.prev || page.next) { %>
+                <nav class="post-nav">
+                    <% if (page.prev) { %>
+                        <a href="<%- url_for(page.prev.path) %>" class="post-nav-prev">
+                            <span class="post-nav-title">← 上一篇</span>
+                            <span class="post-nav-subtitle"><%= page.prev.title %></span>
+                        </a>
+                    <% } %>
+                    <% if (page.next) { %>
+                        <a href="<%- url_for(page.next.path) %>" class="post-nav-next">
+                            <span class="post-nav-title">下一篇 →</span>
+                            <span class="post-nav-subtitle"><%= page.next.title %></span>
+                        </a>
+                    <% } %>
+                </nav>
+            <% } %>
+        </footer>
+    </article>
+</div>
+
+<%- partial('partial/footer') %>

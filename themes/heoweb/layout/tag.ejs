@@ -1,0 +1,57 @@
+<%- partial('partial/nav') %>
+<%- partial('partial/breadcrumb') %>
+
+<div class="tag-container">
+    <header class="tag-header">
+        <h1 class="tag-title">标签</h1>
+        <div class="tag-count">
+            共 <%= site.tags.length %> 个标签
+        </div>
+    </header>
+
+    <div class="tag-cloud">
+        <% site.tags.each(function(tag) { %>
+            <a href="<%- url_for(tag.path) %>" class="tag-item" data-count="<%= tag.posts.length %>">
+                <%= tag.name %>
+                <span class="tag-post-count">(<%= tag.posts.length %>)</span>
+            </a>
+        <% }); %>
+    </div>
+
+    <div class="tags-list">
+        <% site.tags.each(function(tag) { %>
+            <div class="tag-section">
+                <h2 class="tag-name">
+                    <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+                    <span class="tag-post-count">(<%= tag.posts.length %>)</span>
+                </h2>
+                <div class="tag-posts">
+                    <% tag.posts.sort('date', -1).limit(5).each(function(post) { %>
+                        <article class="tag-post">
+                            <div class="post-date">
+                                <%= date(post.date, 'YYYY-MM-DD') %>
+                            </div>
+                            <div class="post-info">
+                                <% if (post.categories && post.categories.length) { %>
+                                    <div class="post-category">
+                                        <%= post.categories.first().name %>
+                                    </div>
+                                <% } %>
+                                <h3 class="post-title">
+                                    <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                                </h3>
+                            </div>
+                        </article>
+                    <% }); %>
+                    <% if (tag.posts.length > 5) { %>
+                        <div class="more-posts">
+                            <a href="<%- url_for(tag.path) %>">查看更多...</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- partial('partial/footer') %>

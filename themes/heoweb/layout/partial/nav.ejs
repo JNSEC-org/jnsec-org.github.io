@@ -1,0 +1,59 @@
+<div class="nav<% if (is_home()) { %> home-initial<% } else { %> always-visible<% } %>">
+    <div class="nav-content">
+        <div class="nav-left">
+            <a href="/" class="site-logo">
+                <img src="<%= url_for(theme.site.avatar) %>" alt="logo" class="site-logo-img">
+                <span class="site-name"><%= theme.site.name %></span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <% for (const i in theme.nav){ %>
+                <% let nav = theme.nav[i] %>
+                <% if (nav.submenu) { %>
+                    <div class="nav-dropdown">
+                        <a href="<%= url_for(nav.url) %>" class="nav-item nav-dropdown-trigger">
+                            <%= i %>
+                            <svg class="nav-dropdown-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="none" d="M0 0h24v24H0z"/>
+                                <path d="M12 15l-4.243-4.243 1.415-1.414L12 12.172l2.828-2.829 1.415 1.414z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <% for (const subName in nav.submenu) { %>
+                                <% let subNav = nav.submenu[subName] %>
+                                <a href="<%= url_for(subNav.url) %>" class="nav-dropdown-item"><%= subName %></a>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } else if (nav.url === '/'){ %>
+                    <% const to = "javascript:heoWeb.scrollTo('" + i + "')" %>
+                    <a href="<%- to %>" class="nav-item"><%= i %></a>
+                <% }else { %>
+                    <a href="<%= url_for(nav.url) %>" class="nav-item"><%= i %></a>
+                <% } %>
+            <% } %>
+            <a class="nav-menu" id="nav-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(255,255,255,1)"/></svg>            </a>
+        </div>
+    </div>
+</div>
+
+<div class="menu-list" id="menu-list">
+    <% for (const i in theme.nav){ %>
+        <% let nav = theme.nav[i] %>
+        <% if (nav.submenu) { %>
+            <div class="mobile-nav-section">
+                <a href="<%= url_for(nav.url) %>" class="nav-item"><%= i %></a>
+                <% for (const subName in nav.submenu) { %>
+                    <% let subNav = nav.submenu[subName] %>
+                    <a href="<%= url_for(subNav.url) %>" class="nav-item nav-sub-item"><%= subName %></a>
+                <% } %>
+            </div>
+        <% } else if (nav.url === '/'){ %>
+            <% const to = "javascript:heoWeb.scrollTo('" + i + "')" %>
+            <a href="<%= to %>" class="nav-item"><%= i %></a>
+        <% }else { %>
+            <a href="<%= url_for(nav.url) %>" class="nav-item"><%= i %></a>
+        <% } %>
+    <% } %>
+</div>

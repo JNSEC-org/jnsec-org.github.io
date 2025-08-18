@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="<%= config.language %>">
+    <head>
+        <%- partial('partial/head') %>
+    </head>
+    <body id="body">
+        <div id="主页"></div>
+        <%- body %>
+        <script type="text/javascript" src="/js/simpleParallax.min.js"></script>
+        <script type="text/javascript" src="/js/main.js"></script>
+        <!-- Prism.js JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+        <% if (theme.extends.body) for (const i of theme.extends.body){ %>
+            <%- i %>
+        <% } %>
+    </body>
+</html>

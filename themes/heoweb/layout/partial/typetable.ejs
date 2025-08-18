@@ -1,0 +1,68 @@
+<div class="product-group need-padding" id="<%= name %>">
+    <h2 class="group-title"><%= type.title %></h2>
+    <div class="group-description"><%= type.desc %></div>
+    <div class="table-container">
+        <% if (type.pagination) { %>
+            <!-- 分页表格 -->
+            <div class="paginated-table" data-page-size="<%= type.pageSize || 5 %>">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <% for (const header of type.headers) { %>
+                                <th><%= header %></th>
+                            <% } %>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <% for (const [index, row] of type.rows.entries()) { %>
+                            <tr class="table-row" data-page="<%= Math.floor(index / (type.pageSize || 5)) + 1 %>">
+                                <% for (const cell of row) { %>
+                                    <td><%- cell %></td>
+                                <% } %>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                
+                <!-- 分页控件 -->
+                <div class="pagination-container">
+                    <div class="pagination-controls">
+                        <button class="pagination-btn prev-btn" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            上一页
+                        </button>
+                        <div class="page-numbers"></div>
+                        <button class="pagination-btn next-btn">
+                            下一页
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <!-- 普通表格 -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <% for (const header of type.headers) { %>
+                            <th><%= header %></th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (const row of type.rows) { %>
+                        <tr>
+                            <% for (const cell of row) { %>
+                                <td><%- cell %></td>
+                            <% } %>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</div>
